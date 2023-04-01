@@ -6,9 +6,7 @@ import { useMovieStore } from '@/stores/movies.js'
 const store = useMovieStore()
 
 onMounted(async () => {
-  // trendingMovies = await getTrendingMovies()
-
-  store.getTrending()
+  store.getTrending({ element: 'all', timeWindow: 'day' })
 })
 </script>
 
@@ -18,18 +16,24 @@ onMounted(async () => {
       :elements="store.trendingMovies"
       :title="`Trending Movies`"
       :loading="store.loadingTrending"
+      element="movie"
+      :show-toolbar="true"
     ></trending-section>
 
     <trending-section
       :elements="store.trendingTv"
       :title="`Trending TV Shows`"
       :loading="store.loadingTrending"
+      element="tv"
+      :show-toolbar="true"
     ></trending-section>
 
     <trending-section
       :elements="store.trendingPerson"
       :title="`Trending Person`"
       :loading="store.loadingTrending"
+      element="person"
+      :show-toolbar="true"
     ></trending-section>
   </v-container>
 </template>

@@ -15,15 +15,15 @@ export const useMovieStore = defineStore('movies', {
   }),
 
   actions: {
-    async fetchTrending() {
-      return axiosClient(`trending/all/day${API_KEY}`)
+    async fetchTrending({ element = "all", timeWindow = "day" }) {
+      return axiosClient(`trending/${element}/${timeWindow}${API_KEY}`)
     },
 
-    async getTrending() {
+    async getTrending({ element = "all", timeWindow = "day" }) {
       try {
         this.loadingTrending = true
 
-        const { data } = await this.fetchTrending();
+        const { data } = await this.fetchTrending({ element, timeWindow });
         const { results } = data;
 
         this.trendingMovies = results.filter((el) => el.media_type === 'movie')
