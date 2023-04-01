@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useMovieStore } from '@/stores/movies.js'
+import { useTrendingStore } from '@/stores/trending.js'
 import TrendingSection from '../components/TrendingSection.vue'
 
-const store = useMovieStore()
+const store = useTrendingStore()
 const route = useRoute()
 const model = ref('day')
 const timeWindow = [

@@ -1,11 +1,9 @@
-import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { axiosClient } from '../apiClient'
-import axios from 'axios'
 
 const API_KEY = '?api_key=8ec40bcc94012375e61c9ea5ece65513'
 
-export const useMovieStore = defineStore('movies', {
+export const useTrendingStore = defineStore('trending', {
   state: () => ({
     trendingMovies: [],
     trendingTv: [],

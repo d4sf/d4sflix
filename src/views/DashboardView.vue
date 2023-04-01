@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import TrendingSection from '../components/TrendingSection.vue'
 import { onMounted } from 'vue'
-import { useMovieStore } from '@/stores/movies.js'
+import { useTrendingStore } from '@/stores/trending.js'
 
-const store = useMovieStore()
+const store = useTrendingStore()
 
 onMounted(async () => {
   store.getTrending({ element: 'all', timeWindow: 'day' })

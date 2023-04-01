@@ -32,9 +32,9 @@ const props = defineProps({
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn variant="outlined" color="white">
+              <v-btn variant="outlined" color="white" :to="`/${element.media_type}/${element.id}`">
                 <span> See More </span>
-                <v-icon right icon="mdi-chevron-right"> </v-icon>
+                <v-icon end icon="mdi-chevron-right"> </v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
