@@ -1,18 +1,34 @@
 <script setup lang="ts">
-import { onMounted, computed, ref } from 'vue'
+import { onMounted, computed, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMovieStore } from '@/stores/movie.js'
+import ElementCard from '../components/ElementCard.vue'
 
+const expand = reactive({
+  reviews: false,
+  media: false,
+  similar: false
+})
 const store = useMovieStore()
 const route = useRoute()
+const promises = [
+  store.getMovieDetails({ movieId: route.params.id }),
+  store.getMovieReviews({ movieId: route.params.id }),
+  store.getMovieImages({ movieId: route.params.id }),
+  store.getSimilarMovies({ movieId: route.params.id })
+]
+
+const movieImages = computed(() => {
+  return store.images.backdrops.slice(0, 12)
+})
 
 onMounted(async () => {
-  store.getMovieDetails({ movieId: route.params.id })
+  Promise.all(promises)
 })
 </script>
 
 <template>
-  <div>
+  <v-container>
     <v-row>
       <v-col>
         <v-card max-height="400">
@@ -105,5 +121,107 @@ onMounted(async () => {
         </v-card>
       </v-col>
     </v-row>
-  </div>
+
+    <v-row>
+      <v-col cols="12">
+        <v-card>
+          <v-toolbar>
+            <v-app-bar-nav-icon icon="mdi-image-outline"></v-app-bar-nav-icon>
+
+            <v-toolbar-title> Media </v-toolbar-title>
+
+            <v-btn @click="expand.media = !expand.media">
+              {{ expand.media ? 'Collapse' : 'Expand' }}
+            </v-btn>
+          </v-toolbar>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="expand.media">
+      <v-col cols="6" sm="4" md="2" v-for="(image, index) in movieImages" :key="index">
+        <v-card>
+          <v-img :src="`https://image.tmdb.org/t/p/original/${image.file_path}`"></v-img>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <template v-if="store.reviews.length">
+      <v-row>
+        <v-col cols="12">
+          <v-card>
+            <v-toolbar>
+              <v-app-bar-nav-icon icon="mdi-message-outline"></v-app-bar-nav-icon>
+
+              <v-toolbar-title> Reviews </v-toolbar-title>
+
+              <v-spacer></v-spacer>
+
+              <v-btn @click="expand.reviews = !expand.reviews">
+                {{ expand.reviews ? 'Collapse' : 'Expand' }}
+              </v-btn>
+            </v-toolbar>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="expand.reviews">
+        <v-col>
+          <v-card class="mb-4" v-for="review in store.reviews" :key="review.id">
+            <v-card-text>
+              {{ review.content }}
+            </v-card-text>
+
+            <v-card-actions>
+              <v-list-item class="w-100">
+                <template v-slot:prepend>
+                  <v-avatar color="primary">
+                    <v-icon icon="mdi-account-circle"></v-icon>
+                  </v-avatar>
+                </template>
+
+                <v-list-item-title>
+                  {{ review.author }}
+                </v-list-item-title>
+
+                <template v-slot:append>
+                  <div class="justify-self-end">
+                    <v-btn
+                      icon="mdi-open-in-new"
+                      color="primary"
+                      :href="review.url"
+                      target="_blank"
+                    >
+                    </v-btn>
+                  </div>
+                </template>
+              </v-list-item>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </template>
+
+    <v-row>
+      <v-col cols="12">
+        <v-card>
+          <v-toolbar>
+            <v-app-bar-nav-icon icon="mdi-shuffle"></v-app-bar-nav-icon>
+
+            <v-toolbar-title> Similar Movies </v-toolbar-title>
+
+            <v-btn @click="expand.similar = !expand.similar">
+              {{ expand.similar ? 'Collapse' : 'Expand' }}
+            </v-btn>
+          </v-toolbar>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="expand.similar">
+      <v-col v-for="movie in store.similar" :key="movie.id" cols="6" md="4" lg="3" xl="2">
+        <element-card :element="movie"></element-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
