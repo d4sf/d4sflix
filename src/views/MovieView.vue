@@ -3,6 +3,7 @@ import { onMounted, computed, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMovieStore } from '@/stores/movie.js'
 import ElementCard from '../components/ElementCard.vue'
+import MediaSection from '../components/MediaSection.vue'
 
 const expand = reactive({
   reviews: false,
@@ -122,29 +123,7 @@ onMounted(async () => {
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="12">
-        <v-card>
-          <v-toolbar>
-            <v-app-bar-nav-icon icon="mdi-image-outline"></v-app-bar-nav-icon>
-
-            <v-toolbar-title> Media </v-toolbar-title>
-
-            <v-btn @click="expand.media = !expand.media">
-              {{ expand.media ? 'Collapse' : 'Expand' }}
-            </v-btn>
-          </v-toolbar>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row v-if="expand.media">
-      <v-col cols="6" sm="4" md="2" v-for="(image, index) in movieImages" :key="index">
-        <v-card>
-          <v-img :src="`https://image.tmdb.org/t/p/original/${image.file_path}`"></v-img>
-        </v-card>
-      </v-col>
-    </v-row>
+    <media-section></media-section>
 
     <template v-if="store.reviews.length">
       <v-row>
