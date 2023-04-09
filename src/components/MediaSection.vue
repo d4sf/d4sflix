@@ -37,13 +37,23 @@ onMounted(() => {
       </v-col>
     </v-row>
 
-    <v-row v-if="expand.media">
-      <v-col cols="6" sm="4" md="2" v-for="(image, index) in movieImages" :key="index">
-        <v-card @click="dialog = true">
-          <v-img :src="`https://image.tmdb.org/t/p/original/${image.file_path}`"></v-img>
-        </v-card>
-      </v-col>
-    </v-row>
+    <template v-if="movieImages.length">
+      <v-row v-if="expand.media">
+        <v-col cols="6" sm="4" md="2" v-for="(image, index) in movieImages" :key="index">
+          <v-card @click="dialog = true">
+            <v-img :src="`https://image.tmdb.org/t/p/original/${image.file_path}`"></v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+    </template>
+
+    <template v-else>
+      <v-row v-if="expand.media">
+        <v-col>
+          <v-alert icon="mdi-emoticon-sad" title="Oops" text="There's nothing here :("></v-alert>
+        </v-col>
+      </v-row>
+    </template>
 
     <v-dialog v-model="dialog" width="auto">
       <v-card>
