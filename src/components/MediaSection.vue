@@ -11,7 +11,9 @@ const expand = reactive({
   media: false
 })
 const movieImages = computed(() => {
-  return store.images.backdrops.slice(0, 12)
+  if (store.images.length) return store.images.backdrops.slice(0, 12)
+
+  return []
 })
 
 onMounted(() => {

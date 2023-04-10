@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useMovieStore } from '@/stores/movie.js'
 import ElementCard from '../components/ElementCard.vue'
 import MediaSection from '../components/MediaSection.vue'
+import ReviewsSection from '../components/ReviewsSection.vue'
 
 const expand = reactive({
   reviews: false,
@@ -14,14 +15,8 @@ const store = useMovieStore()
 const route = useRoute()
 const promises = [
   store.getMovieDetails({ movieId: route.params.id }),
-  store.getMovieReviews({ movieId: route.params.id }),
-  store.getMovieImages({ movieId: route.params.id }),
   store.getSimilarMovies({ movieId: route.params.id })
 ]
-
-const movieImages = computed(() => {
-  return store.images.backdrops.slice(0, 12)
-})
 
 onMounted(async () => {
   Promise.all(promises)
@@ -125,7 +120,8 @@ onMounted(async () => {
 
     <media-section></media-section>
 
-    <template v-if="store.reviews.length">
+    <reviews-section></reviews-section>
+    <!-- <template v-if="store.reviews.length">
       <v-row>
         <v-col cols="12">
           <v-card>
@@ -179,7 +175,7 @@ onMounted(async () => {
           </v-card>
         </v-col>
       </v-row>
-    </template>
+    </template> -->
 
     <v-row>
       <v-col cols="12">
