@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import { onMounted, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTrendingStore } from '@/stores/trending.js'

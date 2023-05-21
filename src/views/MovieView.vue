@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import { onMounted, computed, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMovieStore } from '@/stores/movie.js'

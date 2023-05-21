@@ -8,7 +8,7 @@ import TheFooter from './components/TheFooter.vue'
     <v-app-bar app extended>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>d4sflix</v-toolbar-title>
 
       <v-spacer></v-spacer>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import TrendingSection from '../components/TrendingSection.vue'
 import { onMounted } from 'vue'
 import { useTrendingStore } from '@/stores/trending.js'

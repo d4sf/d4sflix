@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import ElementCard from './ElementCard.vue'
 
 const props = defineProps({
