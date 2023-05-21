@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { axiosClient } from '../apiClient'
 
-const API_KEY = '?api_key=8ec40bcc94012375e61c9ea5ece65513'
+const API_KEY = `?api_key=${process.env.APY_KEY}`
 
 export const useMovieStore = defineStore('movie', {
   state: () => ({
