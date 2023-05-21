@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import { axiosClient } from '../apiClient'
 
-const API_KEY = `?api_key=${import.meta.env.APY_KEY}`
+const API_KEY = '?api_key=' + import.meta.env.VITE_API_KEY
 
 export const useTrendingStore = defineStore('trending', {
   state: () => ({
